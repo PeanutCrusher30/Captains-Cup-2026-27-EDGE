@@ -31,12 +31,12 @@ public class AutoRedCC extends OpMode {
 
 
     public void init(){
-        DcMotor FL = hardwareMap.get(DcMotor.class, "FL");
-        DcMotor FR = hardwareMap.get(DcMotor.class, "FR");
-        DcMotor BL = hardwareMap.get(DcMotor.class, "BL");
-        DcMotor BR = hardwareMap.get(DcMotor.class, "BR");
-        DcMotor Flywheel = hardwareMap.get(DcMotor.class, "Flywheel");
-        CRServo intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
+         FL = hardwareMap.get(DcMotor.class, "FL");
+         FR = hardwareMap.get(DcMotor.class, "FR");
+         BL = hardwareMap.get(DcMotor.class, "BL");
+         BR = hardwareMap.get(DcMotor.class, "BR");
+         Flywheel = hardwareMap.get(DcMotor.class, "Flywheel");
+         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
 
         ElapsedTime runtime = new ElapsedTime();
 
@@ -51,6 +51,11 @@ public class AutoRedCC extends OpMode {
         if (Position == 1){
             Pose2D startingPosition = new Pose2D(DistanceUnit.CM, 150, 330, AngleUnit.RADIANS, 0);
         }
+
+        FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 

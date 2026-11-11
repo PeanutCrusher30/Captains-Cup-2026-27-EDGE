@@ -5,48 +5,48 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 // Moving:
-@TeleOp
+@TeleOp (name="MoveCodeCC")
 public class MoveCodeCC extends OpMode {
-    DcMotor FL;
-    DcMotor FR;
-    DcMotor BL;
-    DcMotor BR;
-    DcMotor flywheel;
-    DcMotor intakeMotor;
-    CRServo intakeServo;
-    private static final double SHOOT_POWER = 1.0; // Tune from 0.0 to 1.0 on the robot.
+    private DcMotor FL;
+    private DcMotor BL;
+    private DcMotor FR;
+    private DcMotor BR;
+    //other motors and servos
+    private DcMotor flywheel;
+    private DcMotor intakeMotor;
+    private CRServo intakeServo;
+//    private static final double S
+//        HOOT_POWER = 1.0; // Tune from 0.0 to 1.0 on the robot.
 
-    float LeftStick_x;
-    float LeftStick_y;
-    float RightStick_x;
+    @Override
+    public void init() {
+         BL = hardwareMap.get(DcMotor.class, "fl");
+         FR = hardwareMap.get(DcMotor.class, "fr");
+         BL = hardwareMap.get(DcMotor.class, "bl");
+         BR = hardwareMap.get(DcMotor.class, "br");
 
+         //initialize intake servo
+        intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
 
-
-    //    boolean Up;
-//    boolean A;
-//    boolean B;
-//    boolean Left;
-//    boolean Right;
-    boolean Right_Bumper;
-
-    public void init(){
-        DcMotor FL = hardwareMap.get(DcMotor.class, "FL");
-        DcMotor FR = hardwareMap.get(DcMotor.class, "FR");
-        DcMotor BL = hardwareMap.get(DcMotor.class, "BL");
-        DcMotor BR = hardwareMap.get(DcMotor.class, "BR");
-
-        CRServo intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
-
+        //initialize flywheel
         flywheel = hardwareMap.get(DcMotor.class, "flywheel");
-        flywheel.setPower(0.0);
+        flywheel.setPower(0);
         flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+        intakeMotor.setPower(0);
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
 
+        FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+    }
+
+    public void Drive(){
         float LeftStick_x = gamepad1.left_stick_x;
         float LeftStick_y = gamepad1.left_stick_y;
         float RightStick_x = gamepad1.right_stick_x;
@@ -58,9 +58,6 @@ public class MoveCodeCC extends OpMode {
 //        boolean right = gamepad1.dpad_right;
         boolean Right_Bumber = gamepad1.right_bumper;
 
-    }
-
-    public void Drive(){
         FL.setPower(LeftStick_x + LeftStick_y + RightStick_x);
         FR.setPower(-LeftStick_x + LeftStick_y - RightStick_x);
         BL.setPower(LeftStick_x + LeftStick_y + RightStick_x);
@@ -84,6 +81,23 @@ public class MoveCodeCC extends OpMode {
         }
 
         intakeMotor.setPower(0);
+    }
+
+    float LeftStick_x;
+    float LeftStick_y;
+    float RightStick_x;
+
+
+
+    //    boolean Up;
+//    boolean A;
+//    boolean B;
+//    boolean Left;
+//    boolean Right;
+    boolean Right_Bumper;
+
+    public MoveCodeCC(DcMotor fl) {
+
     }
 
     public void loop(){
